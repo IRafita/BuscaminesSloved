@@ -18,7 +18,6 @@ Diferents plantejaments
 \" llistes: https://www.gnu.org/software/groff/manual/html_node/Lists-in-ms.html
 .TL
 1 era idea
-.RS
 .IP
 Matriu
 \" primer nivell
@@ -62,7 +61,80 @@ Localitzacio dels pares
 .RE
 .RE
 .RE
+.IP
+Llista
+.RS
+.IP
+Element llista
+.IP
+struct
+.RS
+.IP
+Punter seguent
+.IP
+Punter anterior
+.IP
+Punter matriu
+.RE
 .RE
 
 .TL
 Segona idea
+.IP
+Matriu
+.RS
+.IP
+Element matriu
+.IP
+short int (16 bits) usem max 11 bits
+.RS
+.IP
+punter indirecte: llista max 16x30 = 480 < 9 bits
+.IP
+stat: null, unknow, mine, number = 2 bits
+.IP
+unknow
+.RS
+.IP
+8 bits per localitzar on esta el que desitjem
+.RE
+.RE
+.RE
+.IP
+Llista
+.RS
+.IP
+Element de la llista
+.IP
+Struct
+.RS
+.IP
+Status: invalid, digit, ?conjunt?
+.IP
+Punter relatiu anterior
+.IP
+Punter relatiu seguent
+.IP
+Punter relatiu matriu
+.IP
+Union
+.RS
+.IP
+D\*'igit
+.IP
+Struct
+.RS
+nombre de casselles
+.IP
+nombre de mines
+.IP ?
+punter relatiu Estructures de mines
+.RE
+.IP
+buit
+.RS
+on te els pares
+.RE
+.RE
+.RE
+.RE
