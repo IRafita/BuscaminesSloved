@@ -1,0 +1,68 @@
+.EQ
+delim $$
+.EN
+\" Aixo aparentment son comentaris, cosa que ja feia temps que notava que necessitava
+
+.TL
+Buscamines i el seu enmagatzament
+.AU
+Un possible plantejament per enmagatzemar un buscamines
+.AI
+Sistach Reinoso, Arnau
+
+.NH
+Diferents plantejaments
+
+.LP
+
+\" llistes: https://www.gnu.org/software/groff/manual/html_node/Lists-in-ms.html
+.TL
+1 era idea
+.RS
+.IP
+Matriu
+\" primer nivell
+.RS
+.IP
+Element matriu
+.IP
+Struct
+\" Segon nivell
+.RS
+.IP
+Estat: Res, Buit, Digit, Mina
+.IP
+Union
+\" Tercer nivell
+.RS
+.IP
+D\*'igit
+.IP
+Struct
+.RS
+.IP
+Mines restants
+.IP
+Buits restants
+.IP
+A on estan els Buits restants
+.IP
+Punter a la llista
+.RE
+.IP
+Buit
+.IP
+Struct
+.RS
+.IP
+Nombre de pares
+.IP
+Localitzacio dels pares
+.RE
+.RE
+.RE
+.RE
+.RE
+
+.TL
+Segona idea
