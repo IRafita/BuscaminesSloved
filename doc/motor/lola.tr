@@ -1,0 +1,256 @@
+.EQ
+delim $$
+.EN
+\" Aixo aparentment son comentaris, cosa que ja feia temps que notava que necessitava
+
+.TL
+Buscamines i el seu enmagatzament
+.AU
+Un possible plantejament per enmagatzemar un buscamines
+.AI
+Sistach Reinoso, Arnau
+
+.NH
+Diferents plantejaments
+
+.LP
+
+\" llistes: https://www.gnu.org/software/groff/manual/html_node/Lists-in-ms.html
+.TL
+1 era idea
+.IP
+Matriu
+\" primer nivell
+.RS
+.IP
+Element matriu
+.IP
+Struct
+\" Segon nivell
+.RS
+.IP
+Estat: Res, Buit, Digit, Mina
+.IP
+Union
+\" Tercer nivell
+.RS
+.IP
+D\*'igit
+.IP
+Struct
+.RS
+.IP
+Mines restants
+.IP
+Buits restants
+.IP
+A on estan els Buits restants
+.IP
+Punter a la llista
+.RE
+.IP
+Buit
+.IP
+Struct
+.RS
+.IP
+Nombre de pares
+.IP
+Localitzacio dels pares
+.RE
+.RE
+.RE
+.RE
+.IP
+Llista
+.RS
+.IP
+Element llista
+.IP
+struct
+.RS
+.IP
+Punter seguent
+.IP
+Punter anterior
+.IP
+Punter matriu
+.RE
+.RE
+
+.TL
+Segona idea
+.IP
+Matriu
+.RS
+.IP
+Element matriu
+.IP
+short int (16 bits) usem max 11 bits
+.RS
+.IP
+punter indirecte: llista max 16x30 = 480 < 9 bits
+.IP
+stat: null, unknow, mine, number = 2 bits
+.IP
+unknow
+.RS
+.IP
+8 bits per localitzar on esta el que desitjem
+.RE
+.RE
+.RE
+.IP
+Llista
+.RS
+.IP
+Element de la llista
+.IP
+Struct
+.RS
+.IP
+Status: invalid, digit, ?conjunt?
+.IP
+Punter relatiu anterior
+.IP
+Punter relatiu seguent
+.IP
+Punter relatiu matriu
+.IP
+Union
+.RS
+.IP
+D\*'\igit
+.IP
+Struct
+.RS
+nombre de casselles
+.IP
+nombre de mines
+.IP ?
+punter relatiu Estructures de mines
+.RE
+.IP
+buit
+.RS
+on te els pares
+.RE
+.RE
+.RE
+.RE
+
+
+.NH
+Simulaci\*'o del que vull
+.LP
+.TS
+box center;
+l l l.
+Matriu	estat	0 null
+\^	\^	1 know
+\^	\^	2 digit
+\^	\^	3 mine
+_
+\^	altres	Digit: punter relatiu
+\^	\^	Know: on se troba qui l'apunta
+_
+List	estat	1 invalid
+\^	\^	0 valid
+\^	anterior
+\^	seguent
+\^	nombre de mines
+\^	posicio relativa de les mines
+\^	?	Cassos especials
+.TE
+Matriu inicial
+.TS
+center allbox;
+c c c.
+		x
+
+x	x	x
+.TE
+Aixo se tradueix amb
+.TS
+center allbox;
+c c c.
+0	1	9
+2	4	3
+9	9	9
+.TE
+
+Llavors comencem
+.TS
+allbox center;
+c c c.
+null	null	null
+null	null	null
+null	null	null
+.TE
+Llista
+.TS
+center;
+n || l n l.
+0	estat	1	invalid
+\^	punter	9	null
+\^	anterior	9	null
+\^	seguent	9	null
+\^	mines R.	0
+\^	localitza	0
+\^	??	?	cas especial
+.TE
+
+Begin
+.br
+Descobrir (0, 0)
+.EQ
+skp = RealKnowPoint (0, 0)
+.EN
+.EQ
+if (rkp == null) /9/ exit
+.EN
+rkp = 0
+.br
+Ara estudiem la nostra matriu
+.EQ
+kpm = KnowPointMatrix (0 ,0)
+.EN
+.TS
+r l.
+kpm =	0 mines
+\^	3 knows v\\>
+.TE
+
+.TS
+allbox center;
+c c c.
+numero 0	$<-$	null
+^	d\\	null
+null	null	null
+.TE
+Llista
+.TS
+center;
+n || l n l.
+0	estat	0	valid
+\^	punter	0	null
+\^	anterior	9	null
+\^	seguent	9	null
+\^	mines R.	0
+\^	localitza	3
+\^	??	?	cas especial
+.TE
+add (fast.E, 0) "on me trobo"
+.br
+pop (
+
+.br
+Podria solucionar un:
+.TS
+center allbox;
+ccc.
+
+x	2
+3	5
+x	x	x
+.TE
